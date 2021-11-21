@@ -34,6 +34,8 @@ class WeatherViewController: UIViewController {
     private let maxLabel: UILabel = {
         let label = UILabel()
         label.text = "최고: 16º"
+        label.layer.borderWidth = 2
+        label.layer.borderColor = UIColor.black.cgColor
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -41,6 +43,8 @@ class WeatherViewController: UIViewController {
     private let minLabel: UILabel = {
         let label = UILabel()
         label.text = "최저: 5º"
+        label.layer.borderWidth = 2
+        label.layer.borderColor = UIColor.black.cgColor
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -83,6 +87,19 @@ class WeatherViewController: UIViewController {
         locationLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 50).isActive = true
         locationLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         
+        weatherDescription.topAnchor.constraint(equalTo: locationLabel.bottomAnchor, constant: 5).isActive = true
+        weatherDescription.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        
+        degreeLabel.topAnchor.constraint(equalTo: weatherDescription.bottomAnchor, constant: 5).isActive = true
+        degreeLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        
+        maxLabel.topAnchor.constraint(equalTo: degreeLabel.bottomAnchor).isActive = true
+        //maxLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        maxLabel.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        
+        minLabel.topAnchor.constraint(equalTo: degreeLabel.bottomAnchor).isActive = true
+        minLabel.leftAnchor.constraint(equalTo: maxLabel.rightAnchor).isActive = true
+        minLabel.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         
     }
     
