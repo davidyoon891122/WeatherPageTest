@@ -26,6 +26,7 @@ class WeatherViewController: UIViewController {
     
     private let degreeLabel: UILabel = {
         let label = UILabel()
+        label.font = UIFont.boldSystemFont(ofSize: 50)
         label.text = "10º"
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -34,8 +35,9 @@ class WeatherViewController: UIViewController {
     private let maxLabel: UILabel = {
         let label = UILabel()
         label.text = "최고: 16º"
-        label.layer.borderWidth = 2
-        label.layer.borderColor = UIColor.black.cgColor
+        label.textAlignment = .right
+        //label.layer.borderWidth = 2
+        //label.layer.borderColor = UIColor.black.cgColor
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -43,8 +45,8 @@ class WeatherViewController: UIViewController {
     private let minLabel: UILabel = {
         let label = UILabel()
         label.text = "최저: 5º"
-        label.layer.borderWidth = 2
-        label.layer.borderColor = UIColor.black.cgColor
+        //label.layer.borderWidth = 2
+        //label.layer.borderColor = UIColor.black.cgColor
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -92,14 +94,17 @@ class WeatherViewController: UIViewController {
         
         degreeLabel.topAnchor.constraint(equalTo: weatherDescription.bottomAnchor, constant: 5).isActive = true
         degreeLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        degreeLabel.heightAnchor.constraint(equalToConstant: 150).isActive = true
         
         maxLabel.topAnchor.constraint(equalTo: degreeLabel.bottomAnchor).isActive = true
         //maxLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         maxLabel.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        maxLabel.widthAnchor.constraint(equalToConstant: 180).isActive = true
         
         minLabel.topAnchor.constraint(equalTo: degreeLabel.bottomAnchor).isActive = true
-        minLabel.leftAnchor.constraint(equalTo: maxLabel.rightAnchor).isActive = true
+        //minLabel.leftAnchor.constraint(equalTo: maxLabel.rightAnchor).isActive = true
         minLabel.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        minLabel.widthAnchor.constraint(equalToConstant: 180).isActive = true
         
     }
     
