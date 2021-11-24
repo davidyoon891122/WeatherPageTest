@@ -10,6 +10,8 @@ import UIKit
 class WeatherViewController: UIViewController {
     // MARK: - Properties
     
+    private let reuseIdentifier = "CELL"
+    
     private let weatherBoardVerticalStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
@@ -24,7 +26,6 @@ class WeatherViewController: UIViewController {
         layout.scrollDirection = .horizontal
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .yellow
-        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cell")
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         return collectionView
     }()
@@ -107,6 +108,7 @@ class WeatherViewController: UIViewController {
         view.backgroundColor = .white
         addSubviews()
         setLayoutConstrains()
+        setCollectionViewDelegate()
     }
     
     private func addSubviews() {
@@ -164,6 +166,45 @@ class WeatherViewController: UIViewController {
         
     }
     
+    private func setCollectionViewDelegate() {
+        weatherStatusByTimeCollectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        
+        weatherStatusByTimeCollectionView.delegate = self
+        weatherStatusByTimeCollectionView.dataSource = self
+    }
+    
     // MARK: - Handlers
 
+}
+
+
+// MARK: - Extensions
+
+extension WeatherViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 10
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
+        let imageView = UIImageView(image: UIImage(systemName: "sun.min"))
+        cell.addSubview(imageView)
+        cell.clipsToBounds = true
+        imageView.contentMode = .scaleAspectFit
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.topAnchor.constraint(equalTo: cell.topAnchor).isActive = true
+        imageView.leftAnchor.constraint(equalTo: cell.leftAnchor).isActive = true
+        imageView.bottomAnchor.constraint(equalTo: cell.bottomAnchor).isActive = true
+        imageView.rightAnchor.constraint(equalTo: cell.rightAnchor).isActive = true
+        
+        
+        return cell
+    }
+    
+    
+}
+
+
+extension WeatherViewController: UICollectionViewDelegateFlowLayout {
+    
 }
