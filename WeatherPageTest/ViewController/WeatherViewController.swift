@@ -26,6 +26,7 @@ class WeatherViewController: UIViewController {
         layout.scrollDirection = .horizontal
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .yellow
+        collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         return collectionView
     }()
@@ -42,8 +43,6 @@ class WeatherViewController: UIViewController {
         let label = UILabel()
         label.text = "강남구"
         label.font = UIFont.systemFont(ofSize: 20)
-//        label.layer.borderWidth = 2
-//        label.layer.borderColor = UIColor.blue.cgColor
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -71,8 +70,6 @@ class WeatherViewController: UIViewController {
         let label = UILabel()
         label.text = "최고: 16º"
         label.textAlignment = .right
-        //label.layer.borderWidth = 2
-        //label.layer.borderColor = UIColor.black.cgColor
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -80,8 +77,6 @@ class WeatherViewController: UIViewController {
     private let minLabel: UILabel = {
         let label = UILabel()
         label.text = "최저: 5º"
-        //label.layer.borderWidth = 2
-        //label.layer.borderColor = UIColor.black.cgColor
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -167,7 +162,7 @@ class WeatherViewController: UIViewController {
     }
     
     private func setCollectionViewDelegate() {
-        weatherStatusByTimeCollectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        weatherStatusByTimeCollectionView.register(WeatherStatusCollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         
         weatherStatusByTimeCollectionView.delegate = self
         weatherStatusByTimeCollectionView.dataSource = self
@@ -187,17 +182,6 @@ extension WeatherViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
-        let imageView = UIImageView(image: UIImage(systemName: "sun.min"))
-        cell.addSubview(imageView)
-        cell.clipsToBounds = true
-        imageView.contentMode = .scaleAspectFit
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.topAnchor.constraint(equalTo: cell.topAnchor).isActive = true
-        imageView.leftAnchor.constraint(equalTo: cell.leftAnchor).isActive = true
-        imageView.bottomAnchor.constraint(equalTo: cell.bottomAnchor).isActive = true
-        imageView.rightAnchor.constraint(equalTo: cell.rightAnchor).isActive = true
-        
-        
         return cell
     }
     
@@ -206,5 +190,7 @@ extension WeatherViewController: UICollectionViewDataSource {
 
 
 extension WeatherViewController: UICollectionViewDelegateFlowLayout {
-    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: collectionView.frame.width / 5, height: 90)
+    }
 }
