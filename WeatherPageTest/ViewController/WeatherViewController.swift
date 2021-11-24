@@ -19,12 +19,14 @@ class WeatherViewController: UIViewController {
         return stackView
     }()
     
-    private let weatherStatusByTimeHorizontalStackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.backgroundColor = .yellow
-        stackView.axis = .horizontal
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        return stackView
+    private let weatherStatusByTimeCollectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.backgroundColor = .yellow
+        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cell")
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        return collectionView
     }()
     
     private let weatherForecaseByDayTableView: UITableView = {
@@ -109,7 +111,7 @@ class WeatherViewController: UIViewController {
     
     private func addSubviews() {
         view.addSubview(weatherBoardVerticalStackView)
-        view.addSubview(weatherStatusByTimeHorizontalStackView)
+        view.addSubview(weatherStatusByTimeCollectionView)
         view.addSubview(weatherForecaseByDayTableView)
         
         weatherBoardVerticalStackView.addSubview(locationLabel)
@@ -126,13 +128,13 @@ class WeatherViewController: UIViewController {
         weatherBoardVerticalStackView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         weatherBoardVerticalStackView.heightAnchor.constraint(equalToConstant: 300).isActive = true
         
-        weatherStatusByTimeHorizontalStackView.topAnchor.constraint(equalTo: weatherBoardVerticalStackView.bottomAnchor).isActive = true
-        weatherStatusByTimeHorizontalStackView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-        weatherStatusByTimeHorizontalStackView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-        weatherStatusByTimeHorizontalStackView.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        weatherStatusByTimeCollectionView.topAnchor.constraint(equalTo: weatherBoardVerticalStackView.bottomAnchor).isActive = true
+        weatherStatusByTimeCollectionView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        weatherStatusByTimeCollectionView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        weatherStatusByTimeCollectionView.heightAnchor.constraint(equalToConstant: 100).isActive = true
         
         
-        weatherForecaseByDayTableView.topAnchor.constraint(equalTo: weatherStatusByTimeHorizontalStackView.bottomAnchor).isActive = true
+        weatherForecaseByDayTableView.topAnchor.constraint(equalTo: weatherStatusByTimeCollectionView.bottomAnchor).isActive = true
         weatherForecaseByDayTableView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         weatherForecaseByDayTableView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         weatherForecaseByDayTableView.heightAnchor.constraint(equalToConstant: 500).isActive = true
@@ -161,7 +163,6 @@ class WeatherViewController: UIViewController {
         minLabel.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         
     }
-    
     
     // MARK: - Handlers
 
