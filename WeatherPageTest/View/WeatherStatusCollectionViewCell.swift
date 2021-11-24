@@ -23,6 +23,8 @@ class WeatherStatusCollectionViewCell: UICollectionViewCell {
     private let weatherIconImage: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(systemName: "sun.min")
+//        imageView.layer.borderWidth = 2
+//        imageView.layer.borderColor = UIColor.black.cgColor
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
@@ -61,7 +63,7 @@ class WeatherStatusCollectionViewCell: UICollectionViewCell {
         
         weatherIconImage.topAnchor.constraint(equalTo: timeLabel.bottomAnchor, constant: 5).isActive = true
         weatherIconImage.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        //weatherIconImage.heightAnchor.constraint(equalToConstant: 25).isActive = true
+        weatherIconImage.widthAnchor.constraint(equalToConstant: 30).isActive = true
         
         degreeLabel.topAnchor.constraint(equalTo: weatherIconImage.bottomAnchor, constant: 5).isActive = true
         degreeLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
