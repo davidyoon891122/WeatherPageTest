@@ -10,7 +10,7 @@ import UIKit
 class WeatherViewController: UIViewController {
     // MARK: - Properties
     
-    private let reuseIdentifier = "CELL"
+    private let reuseIdentifierForCollectionView = "CELL"
     
     private let weatherBoardVerticalStackView: UIStackView = {
         let stackView = UIStackView()
@@ -162,7 +162,7 @@ class WeatherViewController: UIViewController {
     }
     
     private func setCollectionViewDelegate() {
-        weatherStatusByTimeCollectionView.register(WeatherStatusCollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        weatherStatusByTimeCollectionView.register(WeatherStatusCollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifierForCollectionView)
         
         weatherStatusByTimeCollectionView.delegate = self
         weatherStatusByTimeCollectionView.dataSource = self
@@ -174,14 +174,13 @@ class WeatherViewController: UIViewController {
 
 
 // MARK: - Extensions
-
 extension WeatherViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 10
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifierForCollectionView, for: indexPath)
         return cell
     }
     
@@ -193,4 +192,19 @@ extension WeatherViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: collectionView.frame.width / 5, height: 90)
     }
+}
+
+
+extension WeatherViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 7
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        
+        return UITableViewCell()
+    }
+    
+    
 }
