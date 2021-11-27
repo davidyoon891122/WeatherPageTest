@@ -37,7 +37,7 @@ class WeatherViewController: UIViewController {
     private let weatherForecaseByDayTableView: UITableView = {
         let tableView = UITableView()
         tableView.backgroundColor = .white
-        tableView.separatorStyle = .none
+        //tableView.separatorStyle = .none
         
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
@@ -179,6 +179,7 @@ class WeatherViewController: UIViewController {
         weatherForecaseByDayTableView.delegate = self
         weatherForecaseByDayTableView.dataSource = self
         weatherForecaseByDayTableView.register(WeatherForecaseByDayTableViewCell.self, forCellReuseIdentifier: reuseIdentifierForTableView)
+        weatherForecaseByDayTableView.register(UITableViewCell.self, forCellReuseIdentifier: "TestCell")
     }
     
     // MARK: - Handlers
@@ -210,15 +211,30 @@ extension WeatherViewController: UICollectionViewDelegateFlowLayout {
 
 extension WeatherViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return daysOnWeek.count
+        if section == 0 {
+            return daysOnWeek.count
+        } else {
+            return 1
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifierForTableView, for: indexPath) as! WeatherForecaseByDayTableViewCell
+        if indexPath.section == 0 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifierForTableView, for: indexPath) as! WeatherForecaseByDayTableViewCell
+            
+            cell.dayLabel.text = daysOnWeek[indexPath.row]
+            return cell
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "TestCell", for: indexPath)
+            cell.textLabel?.text = "오늘: 현재 날씨 맑음, 최고 기온은 8º입니다. 오늘 밤 날씨 청명함, 최저 기온은 -4º"
+            cell.textLabel?.numberOfLines = 0
+            return cell
+        }
         
-        cell.dayLabel.text = daysOnWeek[indexPath.row]
-        return cell
     }
     
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 3
+    }
     
 }
