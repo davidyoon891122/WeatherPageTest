@@ -11,6 +11,9 @@ class WeatherViewController: UIViewController {
     // MARK: - Properties
     
     private let reuseIdentifierForCollectionView = "CELL"
+    private let reuseIdentifierForTableView = "TableViewCell"
+    
+    private let daysOnWeek:[String] = ["월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일", "월요일"]
     
     private let weatherBoardVerticalStackView: UIStackView = {
         let stackView = UIStackView()
@@ -33,7 +36,9 @@ class WeatherViewController: UIViewController {
     
     private let weatherForecaseByDayTableView: UITableView = {
         let tableView = UITableView()
-        tableView.backgroundColor = .green
+        tableView.backgroundColor = .white
+        tableView.separatorStyle = .none
+        
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
@@ -104,6 +109,7 @@ class WeatherViewController: UIViewController {
         addSubviews()
         setLayoutConstrains()
         setCollectionViewDelegate()
+        setTableViewDelegate()
     }
     
     private func addSubviews() {
@@ -168,6 +174,13 @@ class WeatherViewController: UIViewController {
         weatherStatusByTimeCollectionView.dataSource = self
     }
     
+    
+    private func setTableViewDelegate() {
+        weatherForecaseByDayTableView.delegate = self
+        weatherForecaseByDayTableView.dataSource = self
+        weatherForecaseByDayTableView.register(WeatherForecaseByDayTableViewCell.self, forCellReuseIdentifier: reuseIdentifierForTableView)
+    }
+    
     // MARK: - Handlers
 
 }
@@ -197,13 +210,14 @@ extension WeatherViewController: UICollectionViewDelegateFlowLayout {
 
 extension WeatherViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 7
+        return daysOnWeek.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifierForTableView, for: indexPath) as! WeatherForecaseByDayTableViewCell
         
-        return UITableViewCell()
+        cell.dayLabel.text = daysOnWeek[indexPath.row]
+        return cell
     }
     
     

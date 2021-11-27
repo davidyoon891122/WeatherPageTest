@@ -8,13 +8,9 @@
 import UIKit
 
 class WeatherStatusCollectionViewCell: UICollectionViewCell {
-    
-
     private let timeLabel: UILabel = {
         let label = UILabel()
         label.text = "15:21"
-//        label.layer.borderWidth = 2
-//        label.layer.borderColor = UIColor.black.cgColor
         label.font = UIFont.systemFont(ofSize: 15)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -23,8 +19,6 @@ class WeatherStatusCollectionViewCell: UICollectionViewCell {
     private let weatherIconImage: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(systemName: "sun.min")
-//        imageView.layer.borderWidth = 2
-//        imageView.layer.borderColor = UIColor.black.cgColor
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
@@ -32,8 +26,6 @@ class WeatherStatusCollectionViewCell: UICollectionViewCell {
     private let degreeLabel: UILabel = {
         let label = UILabel()
         label.text = "9º"
-//        label.layer.borderWidth = 2
-//        label.layer.borderColor = UIColor.black.cgColor
         label.font = UIFont.systemFont(ofSize: 15)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label

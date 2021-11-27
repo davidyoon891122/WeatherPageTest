@@ -10,13 +10,14 @@ import UIKit
 class WeatherForecaseByDayTableViewCell: UITableViewCell {
     // MARK: - Properties
     
-    private let dayLabel: UILabel = {
+    let dayLabel: UILabel = {
         let label = UILabel()
+        label.text = "일요일"
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
-    private let weatherIconImageView: UIImageView = {
+    let weatherIconImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
         imageView.image = UIImage(systemName: "sun.max")
@@ -24,14 +25,14 @@ class WeatherForecaseByDayTableViewCell: UITableViewCell {
         return imageView
     }()
     
-    private let minDegreeLabel: UILabel = {
+    let minDegreeLabel: UILabel = {
         let label = UILabel()
         label.text = "11º"
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
-    private let maxDegreeLabel: UILabel = {
+    let maxDegreeLabel: UILabel = {
         let label = UILabel()
         label.text = "-3º"
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -56,16 +57,17 @@ class WeatherForecaseByDayTableViewCell: UITableViewCell {
     
     private func setLayoutConstraints() {
         dayLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        dayLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 2).isActive = true
+        dayLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 20).isActive = true
+        
         
         weatherIconImageView.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        weatherIconImageView.leftAnchor.constraint(equalTo: dayLabel.rightAnchor).isActive = true
+        weatherIconImageView.leftAnchor.constraint(equalTo: dayLabel.rightAnchor, constant: 100).isActive = true
         
         minDegreeLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        minDegreeLabel.leftAnchor.constraint(equalTo: weatherIconImageView.rightAnchor).isActive = true
+        minDegreeLabel.leftAnchor.constraint(equalTo: weatherIconImageView.rightAnchor, constant: 100).isActive = true
         
         maxDegreeLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        maxDegreeLabel.leftAnchor.constraint(equalTo: minDegreeLabel.rightAnchor).isActive = true
+        maxDegreeLabel.leftAnchor.constraint(equalTo: minDegreeLabel.rightAnchor, constant: 20).isActive = true
     }
     
     required init?(coder: NSCoder) {
