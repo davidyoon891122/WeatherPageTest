@@ -12,6 +12,8 @@ class WeatherViewController: UIViewController {
     
     private let reuseIdentifierForCollectionView = "CELL"
     private let reuseIdentifierForTableView = "TableViewCell"
+    private let reuseIdentifierForTableViewDescription = "TableViewDescriptionCell"
+    private let reuseIdentifierFOrTableViewDetailInfo = "TableViewDetailInfoCell"
     
     private let daysOnWeek:[String] = ["월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일", "월요일"]
     
@@ -203,7 +205,8 @@ class WeatherViewController: UIViewController {
         weatherForecaseByDayTableView.delegate = self
         weatherForecaseByDayTableView.dataSource = self
         weatherForecaseByDayTableView.register(WeatherForecaseByDayTableViewCell.self, forCellReuseIdentifier: reuseIdentifierForTableView)
-        weatherForecaseByDayTableView.register(UITableViewCell.self, forCellReuseIdentifier: "TestCell")
+        weatherForecaseByDayTableView.register(UITableViewCell.self, forCellReuseIdentifier: reuseIdentifierForTableViewDescription)
+        weatherForecaseByDayTableView.register(WeatherDetailInfoTableViewCell.self, forCellReuseIdentifier: reuseIdentifierFOrTableViewDetailInfo)
     }
     
     private func setPanGesture() {
@@ -215,7 +218,6 @@ class WeatherViewController: UIViewController {
     // MARK: - Handlers
 
     @objc func panAction(_ sender: UIPanGestureRecognizer) {
-        print("panAction")
         let velocity = sender.velocity(in: mainScrollView)
         if abs(velocity.x) > abs(velocity.y) {
             velocity.x < 0 ? print("left") : print("right")
@@ -253,8 +255,12 @@ extension WeatherViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
             return daysOnWeek.count
-        } else {
+        } else if section == 1 {
             return 1
+        } else if section == 2 {
+            return 5
+        } else {
+            return 0
         }
     }
     
@@ -264,11 +270,16 @@ extension WeatherViewController: UITableViewDelegate, UITableViewDataSource {
             
             cell.dayLabel.text = daysOnWeek[indexPath.row]
             return cell
-        } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "TestCell", for: indexPath)
+        } else if indexPath.section == 1 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifierForTableViewDescription, for: indexPath)
             cell.textLabel?.text = "오늘: 현재 날씨 맑음, 최고 기온은 8º입니다. 오늘 밤 날씨 청명함, 최저 기온은 -4º"
             cell.textLabel?.numberOfLines = 0
             return cell
+        } else if indexPath.section == 2 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifierFOrTableViewDetailInfo, for: indexPath) as! WeatherDetailInfoTableViewCell
+            return cell
+        }else {
+            return UITableViewCell()
         }
         
     }
@@ -277,7 +288,19 @@ extension WeatherViewController: UITableViewDelegate, UITableViewDataSource {
         return 3
     }
     
-    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if indexPath.section == 0 {
+            return 50
+        } else if indexPath.section == 1 {
+            return 80
+        } else if indexPath.section == 2 {
+            return 65
+        } else {
+            return 50
+            
+        }
+    }
+
     
 }
 

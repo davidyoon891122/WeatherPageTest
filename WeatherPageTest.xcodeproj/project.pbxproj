@@ -14,6 +14,7 @@
 		ADFB5121274885FF00D854E3 /* WeatherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADFB5120274885FF00D854E3 /* WeatherViewController.swift */; };
 		ADFB5125274E0FEC00D854E3 /* WeatherStatusCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADFB5124274E0FEC00D854E3 /* WeatherStatusCollectionViewCell.swift */; };
 		ADFB5127274E1FF900D854E3 /* WeatherForecaseByDayTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADFB5126274E1FF900D854E3 /* WeatherForecaseByDayTableViewCell.swift */; };
+		ADFB514B27545DD100D854E3 /* WeatherDetailInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADFB514A27545DD100D854E3 /* WeatherDetailInfoTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		ADFB5120274885FF00D854E3 /* WeatherViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherViewController.swift; sourceTree = "<group>"; };
 		ADFB5124274E0FEC00D854E3 /* WeatherStatusCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherStatusCollectionViewCell.swift; sourceTree = "<group>"; };
 		ADFB5126274E1FF900D854E3 /* WeatherForecaseByDayTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherForecaseByDayTableViewCell.swift; sourceTree = "<group>"; };
+		ADFB514A27545DD100D854E3 /* WeatherDetailInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDetailInfoTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,6 +92,7 @@
 			children = (
 				ADFB5124274E0FEC00D854E3 /* WeatherStatusCollectionViewCell.swift */,
 				ADFB5126274E1FF900D854E3 /* WeatherForecaseByDayTableViewCell.swift */,
+				ADFB514A27545DD100D854E3 /* WeatherDetailInfoTableViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -168,6 +171,7 @@
 				ADFB510D274883FE00D854E3 /* SceneDelegate.swift in Sources */,
 				ADFB5127274E1FF900D854E3 /* WeatherForecaseByDayTableViewCell.swift in Sources */,
 				ADFB5125274E0FEC00D854E3 /* WeatherStatusCollectionViewCell.swift in Sources */,
+				ADFB514B27545DD100D854E3 /* WeatherDetailInfoTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
