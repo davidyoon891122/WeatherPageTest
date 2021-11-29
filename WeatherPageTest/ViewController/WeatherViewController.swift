@@ -18,6 +18,7 @@ class WeatherViewController: UIViewController {
     private let mainScrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.backgroundColor = .blue
         scrollView.isScrollEnabled = true
         return scrollView
     }()
@@ -109,6 +110,7 @@ class WeatherViewController: UIViewController {
     
     
     
+    
     // MARK: - Init
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -117,10 +119,11 @@ class WeatherViewController: UIViewController {
         setLayoutConstrains()
         setCollectionViewDelegate()
         setTableViewDelegate()
+        setPanGesture()
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        mainScrollView.contentSize = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height + 100)
+        mainScrollView.contentSize = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height + 300)
     }
     
     
@@ -147,7 +150,7 @@ class WeatherViewController: UIViewController {
         mainScrollView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor).isActive = true
         
         
-        //weatherBoardVerticalStackView.topAnchor.constraint(equalTo: super.view.safeAreaLayoutGuide.topAnchor).isActive = true
+        //weatherBoardVerticalStackView.topAnchor.constraint(equalTo: super.view.topAnchor).isActive = true
         weatherBoardVerticalStackView.leftAnchor.constraint(equalTo: super.view.leftAnchor).isActive = true
         weatherBoardVerticalStackView.rightAnchor.constraint(equalTo: super.view.rightAnchor).isActive = true
         weatherBoardVerticalStackView.heightAnchor.constraint(equalToConstant: 300).isActive = true
@@ -163,7 +166,7 @@ class WeatherViewController: UIViewController {
         weatherForecaseByDayTableView.rightAnchor.constraint(equalTo: super.view.rightAnchor).isActive = true
         weatherForecaseByDayTableView.heightAnchor.constraint(equalToConstant: 500).isActive = true
         
-        locationLabel.topAnchor.constraint(equalTo: super.view.safeAreaLayoutGuide.topAnchor, constant: 60).isActive = true
+        locationLabel.topAnchor.constraint(equalTo: weatherBoardVerticalStackView.safeAreaLayoutGuide.topAnchor, constant: 60).isActive = true
         locationLabel.leftAnchor.constraint(equalTo: super.view.leftAnchor).isActive = true
         locationLabel.rightAnchor.constraint(equalTo: super.view.rightAnchor).isActive = true
         locationLabel.heightAnchor.constraint(equalToConstant: 30).isActive = true
@@ -203,8 +206,24 @@ class WeatherViewController: UIViewController {
         weatherForecaseByDayTableView.register(UITableViewCell.self, forCellReuseIdentifier: "TestCell")
     }
     
+    private func setPanGesture() {
+        let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(panAction))
+        panGestureRecognizer.delegate = self
+        mainScrollView.addGestureRecognizer(panGestureRecognizer)
+    }
+    
     // MARK: - Handlers
 
+    @objc func panAction(_ sender: UIPanGestureRecognizer) {
+        print("panAction")
+        let velocity = sender.velocity(in: mainScrollView)
+        if abs(velocity.x) > abs(velocity.y) {
+            velocity.x < 0 ? print("left") : print("right")
+        } else if abs(velocity.y) > abs(velocity.x) {
+            velocity.y < 0 ? print("up") : print("down")
+        }
+    }
+    
 }
 
 
@@ -262,3 +281,9 @@ extension WeatherViewController: UITableViewDelegate, UITableViewDataSource {
     
 }
 
+
+extension WeatherViewController:UIGestureRecognizerDelegate {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
+    }
+}
