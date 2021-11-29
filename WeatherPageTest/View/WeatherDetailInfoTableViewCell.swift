@@ -10,20 +10,37 @@ import UIKit
 class WeatherDetailInfoTableViewCell: UITableViewCell {
     
     // MARK: - properties
-    let titleLabel: UILabel = {
+    let firstTitleLabel: UILabel = {
         let label = UILabel()
         label.text = "일출"
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
-    let contentLabel: UILabel = {
+    let firstContentLabel: UILabel = {
         let label = UILabel()
         label.text = "오전 7:26"
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.boldSystemFont(ofSize: 25)
         return label
     }()
+    
+    let secondTitleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "일몰"
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    let secondContentLabel: UILabel = {
+        let label = UILabel()
+        label.text = "오후 5:14"
+        label.font = UIFont.boldSystemFont(ofSize: 25)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    //let secondTitleLabel
     
     // MARK: - Init
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -33,16 +50,25 @@ class WeatherDetailInfoTableViewCell: UITableViewCell {
     }
     
     private func addSubviews() {
-        addSubview(titleLabel)
-        addSubview(contentLabel)
+        addSubview(firstTitleLabel)
+        addSubview(firstContentLabel)
+        
+        addSubview(secondTitleLabel)
+        addSubview(secondContentLabel)
     }
     
     private func setLayoutConstraints() {
-        titleLabel.topAnchor.constraint(equalTo: topAnchor,constant: 5).isActive = true
-        titleLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 20).isActive = true
+        firstTitleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 5).isActive = true
+        firstTitleLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 20).isActive = true
         
-        contentLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 5).isActive = true
-        contentLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 20).isActive = true
+        firstContentLabel.topAnchor.constraint(equalTo: firstTitleLabel.bottomAnchor, constant: 5).isActive = true
+        firstContentLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 20).isActive = true
+        
+        secondTitleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 5).isActive = true
+        secondTitleLabel.leftAnchor.constraint(equalTo: firstTitleLabel.rightAnchor, constant: 160).isActive = true
+        
+        secondContentLabel.topAnchor.constraint(equalTo: secondTitleLabel.bottomAnchor, constant: 5).isActive = true
+        secondContentLabel.leftAnchor.constraint(equalTo: firstContentLabel.rightAnchor, constant: 90).isActive = true
         
         
     }

@@ -17,13 +17,13 @@ class WeatherViewController: UIViewController {
     
     private let daysOnWeek:[String] = ["월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일", "월요일"]
     
-    private let mainScrollView: UIScrollView = {
-        let scrollView = UIScrollView()
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
-        scrollView.backgroundColor = .blue
-        scrollView.isScrollEnabled = true
-        return scrollView
-    }()
+//    private let mainScrollView: UIScrollView = {
+//        let scrollView = UIScrollView()
+//        scrollView.translatesAutoresizingMaskIntoConstraints = false
+//        scrollView.backgroundColor = .blue
+//        scrollView.isScrollEnabled = true
+//        return scrollView
+//    }()
     
     private let weatherBoardVerticalStackView: UIStackView = {
         let stackView = UIStackView()
@@ -125,16 +125,16 @@ class WeatherViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        mainScrollView.contentSize = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height + 300)
+        weatherForecaseByDayTableView.contentSize = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height )
     }
     
     
     private func addSubviews() {
-        view.addSubview(mainScrollView)
+        //view.addSubview(mainScrollView)
         
-        mainScrollView.addSubview(weatherBoardVerticalStackView)
-        mainScrollView.addSubview(weatherStatusByTimeCollectionView)
-        mainScrollView.addSubview(weatherForecaseByDayTableView)
+        view.addSubview(weatherBoardVerticalStackView)
+        view.addSubview(weatherStatusByTimeCollectionView)
+        view.addSubview(weatherForecaseByDayTableView)
         
         weatherBoardVerticalStackView.addSubview(locationLabel)
         weatherBoardVerticalStackView.addSubview(weatherDescription)
@@ -146,13 +146,13 @@ class WeatherViewController: UIViewController {
     
     private func setLayoutConstrains() {
         
-        mainScrollView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        mainScrollView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor).isActive = true
-        mainScrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
-        mainScrollView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor).isActive = true
+//        mainScrollView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+//        mainScrollView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor).isActive = true
+//        mainScrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
+//        mainScrollView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor).isActive = true
         
         
-        //weatherBoardVerticalStackView.topAnchor.constraint(equalTo: super.view.topAnchor).isActive = true
+        weatherBoardVerticalStackView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
         weatherBoardVerticalStackView.leftAnchor.constraint(equalTo: super.view.leftAnchor).isActive = true
         weatherBoardVerticalStackView.rightAnchor.constraint(equalTo: super.view.rightAnchor).isActive = true
         weatherBoardVerticalStackView.heightAnchor.constraint(equalToConstant: 300).isActive = true
@@ -166,7 +166,7 @@ class WeatherViewController: UIViewController {
         weatherForecaseByDayTableView.topAnchor.constraint(equalTo: weatherStatusByTimeCollectionView.bottomAnchor).isActive = true
         weatherForecaseByDayTableView.leftAnchor.constraint(equalTo: super.view.leftAnchor).isActive = true
         weatherForecaseByDayTableView.rightAnchor.constraint(equalTo: super.view.rightAnchor).isActive = true
-        weatherForecaseByDayTableView.heightAnchor.constraint(equalToConstant: 500).isActive = true
+        weatherForecaseByDayTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         
         locationLabel.topAnchor.constraint(equalTo: weatherBoardVerticalStackView.safeAreaLayoutGuide.topAnchor, constant: 60).isActive = true
         locationLabel.leftAnchor.constraint(equalTo: super.view.leftAnchor).isActive = true
@@ -212,13 +212,13 @@ class WeatherViewController: UIViewController {
     private func setPanGesture() {
         let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(panAction))
         panGestureRecognizer.delegate = self
-        mainScrollView.addGestureRecognizer(panGestureRecognizer)
+        view.addGestureRecognizer(panGestureRecognizer)
     }
     
     // MARK: - Handlers
 
     @objc func panAction(_ sender: UIPanGestureRecognizer) {
-        let velocity = sender.velocity(in: mainScrollView)
+        let velocity = sender.velocity(in: view)
         if abs(velocity.x) > abs(velocity.y) {
             velocity.x < 0 ? print("left") : print("right")
         } else if abs(velocity.y) > abs(velocity.x) {
