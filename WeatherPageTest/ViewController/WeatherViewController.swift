@@ -17,13 +17,12 @@ class WeatherViewController: UIViewController {
     
     private let daysOnWeek:[String] = ["월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일", "월요일"]
     
-//    private let mainScrollView: UIScrollView = {
-//        let scrollView = UIScrollView()
-//        scrollView.translatesAutoresizingMaskIntoConstraints = false
-//        scrollView.backgroundColor = .blue
-//        scrollView.isScrollEnabled = true
-//        return scrollView
-//    }()
+    private let detailInfoFirstTitles:[String] = ["일출", "비 올 확률","바람", "강수량","가시거리"]
+    private let detailInfoSecondTitles:[String] = ["일몰", "습도", "체감", "기압", "자외선 지수" ]
+    
+    private var weatherBoardHeightConstraint: NSLayoutConstraint?
+    private var locationLabelTopConstraint: NSLayoutConstraint?
+    private var isFold = false
     
     private let weatherBoardVerticalStackView: UIStackView = {
         let stackView = UIStackView()
@@ -57,7 +56,7 @@ class WeatherViewController: UIViewController {
     private let locationLabel: UILabel = {
         let label = UILabel()
         label.text = "강남구"
-        label.font = UIFont.systemFont(ofSize: 20)
+        label.font = UIFont.boldSystemFont(ofSize: 25)
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -110,6 +109,18 @@ class WeatherViewController: UIViewController {
         return tableView
     }()
     
+    private let foldButton: UIButton = {
+        let button = UIButton(type: .custom)
+        button.setTitle("Fold", for: .normal)
+        button.setTitle("Unfold", for: .selected)
+        button.layer.borderWidth = 2
+        button.layer.borderColor = UIColor.white.cgColor
+        button.layer.cornerRadius = 10
+        button.layer.masksToBounds = true
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(foldButtonOnClicked), for: .touchUpInside)
+        return button
+    }()
     
     
     
@@ -136,6 +147,7 @@ class WeatherViewController: UIViewController {
         view.addSubview(weatherStatusByTimeCollectionView)
         view.addSubview(weatherForecaseByDayTableView)
         
+        weatherBoardVerticalStackView.addSubview(foldButton)
         weatherBoardVerticalStackView.addSubview(locationLabel)
         weatherBoardVerticalStackView.addSubview(weatherDescription)
         weatherBoardVerticalStackView.addSubview(degreeLabel)
@@ -145,17 +157,12 @@ class WeatherViewController: UIViewController {
     }
     
     private func setLayoutConstrains() {
-        
-//        mainScrollView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-//        mainScrollView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor).isActive = true
-//        mainScrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
-//        mainScrollView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor).isActive = true
-        
-        
         weatherBoardVerticalStackView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
         weatherBoardVerticalStackView.leftAnchor.constraint(equalTo: super.view.leftAnchor).isActive = true
         weatherBoardVerticalStackView.rightAnchor.constraint(equalTo: super.view.rightAnchor).isActive = true
-        weatherBoardVerticalStackView.heightAnchor.constraint(equalToConstant: 300).isActive = true
+        
+        weatherBoardHeightConstraint = weatherBoardVerticalStackView.heightAnchor.constraint(equalToConstant: 300)
+        weatherBoardHeightConstraint?.isActive = true
         
         weatherStatusByTimeCollectionView.topAnchor.constraint(equalTo: weatherBoardVerticalStackView.bottomAnchor).isActive = true
         weatherStatusByTimeCollectionView.leftAnchor.constraint(equalTo: super.view.leftAnchor).isActive = true
@@ -168,7 +175,8 @@ class WeatherViewController: UIViewController {
         weatherForecaseByDayTableView.rightAnchor.constraint(equalTo: super.view.rightAnchor).isActive = true
         weatherForecaseByDayTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         
-        locationLabel.topAnchor.constraint(equalTo: weatherBoardVerticalStackView.safeAreaLayoutGuide.topAnchor, constant: 60).isActive = true
+        locationLabelTopConstraint = locationLabel.topAnchor.constraint(equalTo: weatherBoardVerticalStackView.safeAreaLayoutGuide.topAnchor, constant: 40)
+        locationLabelTopConstraint?.isActive = true
         locationLabel.leftAnchor.constraint(equalTo: super.view.leftAnchor).isActive = true
         locationLabel.rightAnchor.constraint(equalTo: super.view.rightAnchor).isActive = true
         locationLabel.heightAnchor.constraint(equalToConstant: 30).isActive = true
@@ -191,6 +199,10 @@ class WeatherViewController: UIViewController {
         minLabel.leftAnchor.constraint(equalTo: maxLabel.rightAnchor, constant: 2).isActive = true
         minLabel.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         
+        foldButton.topAnchor.constraint(equalTo: weatherBoardVerticalStackView.topAnchor, constant: 50).isActive = true
+        foldButton.rightAnchor.constraint(equalTo: weatherBoardVerticalStackView.rightAnchor, constant: -30).isActive = true
+        foldButton.widthAnchor.constraint(equalToConstant: 70).isActive = true
+        foldButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
     }
     
     private func setCollectionViewDelegate() {
@@ -219,12 +231,48 @@ class WeatherViewController: UIViewController {
 
     @objc func panAction(_ sender: UIPanGestureRecognizer) {
         let velocity = sender.velocity(in: view)
+        //print("check velocity x: \(velocity.x), velocity y: \(velocity.y)")
         if abs(velocity.x) > abs(velocity.y) {
             velocity.x < 0 ? print("left") : print("right")
         } else if abs(velocity.y) > abs(velocity.x) {
             velocity.y < 0 ? print("up") : print("down")
         }
     }
+    
+    
+    @objc func foldButtonOnClicked(_ sender: UIButton) {
+        print("foldButton state: \(sender.state)")
+        isFold = !isFold
+        if isFold {
+            foldButton.setTitle("Unfold", for: .normal)
+            weatherBoardHeightConstraint?.isActive = false
+            self.weatherBoardHeightConstraint = self.weatherBoardVerticalStackView.heightAnchor.constraint(equalToConstant: 100)
+            weatherBoardHeightConstraint?.isActive = true
+            
+            locationLabelTopConstraint?.isActive = false
+            locationLabelTopConstraint = self.locationLabel.topAnchor.constraint(equalTo: self.weatherBoardVerticalStackView.safeAreaLayoutGuide.topAnchor)
+            locationLabelTopConstraint?.isActive = true
+            UIView.animate(withDuration: 0.8, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.2, options: .curveEaseInOut, animations: { [unowned self] in
+                view.layoutIfNeeded()
+            }, completion: nil)
+            
+            
+        } else {
+            foldButton.setTitle("Fold", for: .normal)
+            self.weatherBoardHeightConstraint?.isActive = false
+            self.weatherBoardHeightConstraint = self.weatherBoardVerticalStackView.heightAnchor.constraint(equalToConstant: 300)
+            self.weatherBoardHeightConstraint?.isActive = true
+            
+            locationLabelTopConstraint?.isActive = false
+            locationLabelTopConstraint = self.locationLabel.topAnchor.constraint(equalTo: weatherBoardVerticalStackView.safeAreaLayoutGuide.topAnchor, constant: 40)
+            locationLabelTopConstraint?.isActive = true
+            UIView.animate(withDuration: 0.8, delay: 0, options: .curveEaseInOut, animations: { [unowned self] in
+                view.layoutIfNeeded()
+            }, completion: nil)
+        }
+    }
+    
+    
     
 }
 
@@ -277,6 +325,9 @@ extension WeatherViewController: UITableViewDelegate, UITableViewDataSource {
             return cell
         } else if indexPath.section == 2 {
             let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifierFOrTableViewDetailInfo, for: indexPath) as! WeatherDetailInfoTableViewCell
+            cell.firstTitleLabel.text = detailInfoFirstTitles[indexPath.row]
+            cell.secondTitleLabel.text = detailInfoSecondTitles[indexPath.row]
+            
             return cell
         }else {
             return UITableViewCell()

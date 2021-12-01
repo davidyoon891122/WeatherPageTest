@@ -65,10 +65,10 @@ class WeatherDetailInfoTableViewCell: UITableViewCell {
         firstContentLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 20).isActive = true
         
         secondTitleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 5).isActive = true
-        secondTitleLabel.leftAnchor.constraint(equalTo: firstTitleLabel.rightAnchor, constant: 160).isActive = true
+        secondTitleLabel.rightAnchor.constraint(equalTo: rightAnchor, constant: -150).isActive = true
         
         secondContentLabel.topAnchor.constraint(equalTo: secondTitleLabel.bottomAnchor, constant: 5).isActive = true
-        secondContentLabel.leftAnchor.constraint(equalTo: firstContentLabel.rightAnchor, constant: 90).isActive = true
+        secondContentLabel.rightAnchor.constraint(equalTo: rightAnchor, constant: -70).isActive = true
         
         
     }
