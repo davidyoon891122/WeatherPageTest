@@ -40,6 +40,7 @@ class WeatherViewController: UIViewController {
         collectionView.backgroundColor = .yellow
         collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.showsHorizontalScrollIndicator = false
         return collectionView
     }()
     
@@ -48,6 +49,7 @@ class WeatherViewController: UIViewController {
         tableView.backgroundColor = .white
         //tableView.separatorStyle = .none
         tableView.estimatedRowHeight = 900
+        tableView.showsVerticalScrollIndicator = false
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
@@ -252,6 +254,17 @@ class WeatherViewController: UIViewController {
             locationLabelTopConstraint?.isActive = false
             locationLabelTopConstraint = self.locationLabel.topAnchor.constraint(equalTo: self.weatherBoardVerticalStackView.safeAreaLayoutGuide.topAnchor)
             locationLabelTopConstraint?.isActive = true
+            
+            weatherBoardVerticalStackView.addSubview(foldButton)
+            weatherBoardVerticalStackView.addSubview(locationLabel)
+            weatherBoardVerticalStackView.addSubview(weatherDescription)
+            weatherBoardVerticalStackView.addSubview(degreeLabel)
+            weatherBoardVerticalStackView.addSubview(maxLabel)
+            weatherBoardVerticalStackView.addSubview(minLabel)
+            
+//            degreeLabel.textColor = UIColor.init(hue: <#T##CGFloat#>, saturation: <#T##CGFloat#>, brightness: <#T##CGFloat#>, alpha: <#T##CGFloat#>)
+            
+            
             UIView.animate(withDuration: 0.8, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.2, options: .curveEaseInOut, animations: { [unowned self] in
                 view.layoutIfNeeded()
             }, completion: nil)
