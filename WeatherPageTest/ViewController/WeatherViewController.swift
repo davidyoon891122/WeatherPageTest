@@ -239,6 +239,53 @@ class WeatherViewController: UIViewController {
         } else if abs(velocity.y) > abs(velocity.x) {
             velocity.y < 0 ? print("up") : print("down")
         }
+        
+        if abs(velocity.y) > abs(velocity.x) {
+            if velocity.y < 0 {
+                weatherBoardHeightConstraint?.isActive = false
+                self.weatherBoardHeightConstraint = self.weatherBoardVerticalStackView.heightAnchor.constraint(equalToConstant: 100)
+                weatherBoardHeightConstraint?.isActive = true
+                
+                locationLabelTopConstraint?.isActive = false
+                locationLabelTopConstraint = self.locationLabel.topAnchor.constraint(equalTo: self.weatherBoardVerticalStackView.safeAreaLayoutGuide.topAnchor)
+                locationLabelTopConstraint?.isActive = true
+                
+                weatherBoardVerticalStackView.addSubview(foldButton)
+                weatherBoardVerticalStackView.addSubview(locationLabel)
+                weatherBoardVerticalStackView.addSubview(weatherDescription)
+                weatherBoardVerticalStackView.addSubview(degreeLabel)
+                weatherBoardVerticalStackView.addSubview(maxLabel)
+                weatherBoardVerticalStackView.addSubview(minLabel)
+                
+                
+                
+                
+                
+                UIView.animate(withDuration: 0.8, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.2, options: .curveEaseInOut, animations: { [unowned self] in
+                    view.layoutIfNeeded()
+                    degreeLabel.alpha = 0
+                    maxLabel.alpha = 0
+                    minLabel.alpha = 0
+                }, completion: nil)
+            } else if velocity.y > 0 {
+                self.weatherBoardHeightConstraint?.isActive = false
+                self.weatherBoardHeightConstraint = self.weatherBoardVerticalStackView.heightAnchor.constraint(equalToConstant: 300)
+                self.weatherBoardHeightConstraint?.isActive = true
+                
+                locationLabelTopConstraint?.isActive = false
+                locationLabelTopConstraint = self.locationLabel.topAnchor.constraint(equalTo: weatherBoardVerticalStackView.safeAreaLayoutGuide.topAnchor, constant: 40)
+                locationLabelTopConstraint?.isActive = true
+                
+                
+                
+                UIView.animate(withDuration: 0.8, delay: 0, options: .curveEaseInOut, animations: { [unowned self] in
+                    view.layoutIfNeeded()
+                    degreeLabel.alpha = 1
+                    maxLabel.alpha = 1
+                    minLabel.alpha = 1
+                }, completion: nil)
+            }
+        }
     }
     
     
