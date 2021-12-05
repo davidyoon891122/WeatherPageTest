@@ -262,11 +262,15 @@ class WeatherViewController: UIViewController {
             weatherBoardVerticalStackView.addSubview(maxLabel)
             weatherBoardVerticalStackView.addSubview(minLabel)
             
-//            degreeLabel.textColor = UIColor.init(hue: <#T##CGFloat#>, saturation: <#T##CGFloat#>, brightness: <#T##CGFloat#>, alpha: <#T##CGFloat#>)
             
             
-            UIView.animate(withDuration: 0.8, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.2, options: .curveEaseInOut, animations: { [unowned self] in
+            
+            
+            UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.2, options: .curveEaseInOut, animations: { [unowned self] in
                 view.layoutIfNeeded()
+                degreeLabel.alpha = 0
+                maxLabel.alpha = 0
+                minLabel.alpha = 0
             }, completion: nil)
             
             
@@ -279,8 +283,14 @@ class WeatherViewController: UIViewController {
             locationLabelTopConstraint?.isActive = false
             locationLabelTopConstraint = self.locationLabel.topAnchor.constraint(equalTo: weatherBoardVerticalStackView.safeAreaLayoutGuide.topAnchor, constant: 40)
             locationLabelTopConstraint?.isActive = true
-            UIView.animate(withDuration: 0.8, delay: 0, options: .curveEaseInOut, animations: { [unowned self] in
+            
+            
+            
+            UIView.animate(withDuration: 1, delay: 0, options: .curveEaseInOut, animations: { [unowned self] in
                 view.layoutIfNeeded()
+                degreeLabel.alpha = 1
+                maxLabel.alpha = 1
+                minLabel.alpha = 1
             }, completion: nil)
         }
     }
