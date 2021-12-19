@@ -6,14 +6,20 @@
 //
 
 import UIKit
+import Alamofire
 
 class WeatherViewController: UIViewController {
     // MARK: - Properties
-    
     private let reuseIdentifierForCollectionView = "CELL"
     private let reuseIdentifierForTableView = "TableViewCell"
     private let reuseIdentifierForTableViewDescription = "TableViewDescriptionCell"
     private let reuseIdentifierFOrTableViewDetailInfo = "TableViewDetailInfoCell"
+    
+    private let weatherAPIKey = "767cd7ad6286d493b227a37032a0bcd6"
+    //lat=37.52510&lon=126.92620
+    private let latitude: Float = 37.52510
+    private let longitude: Float = 126.92620
+    
     
     private let daysOnWeek:[String] = ["월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일", "월요일"]
     
@@ -27,7 +33,7 @@ class WeatherViewController: UIViewController {
     private let weatherBoardVerticalStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
-        stackView.backgroundColor = .orange
+        stackView.backgroundColor = .clear
         stackView.distribution = .fillProportionally
         stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
@@ -37,7 +43,7 @@ class WeatherViewController: UIViewController {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.backgroundColor = .yellow
+        collectionView.backgroundColor = .systemBackground
         collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.showsHorizontalScrollIndicator = false
@@ -46,7 +52,8 @@ class WeatherViewController: UIViewController {
     
     private let weatherForecaseByDayTableView: UITableView = {
         let tableView = UITableView()
-        tableView.backgroundColor = .white
+        tableView.backgroundColor = .systemBackground
+        
         tableView.estimatedRowHeight = 900
         tableView.showsVerticalScrollIndicator = false
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -114,12 +121,13 @@ class WeatherViewController: UIViewController {
     // MARK: - Init
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        view.backgroundColor = .systemBackground
         addSubviews()
         setLayoutConstrains()
         setCollectionViewDelegate()
         setTableViewDelegate()
         setPanGesture()
+        fetchWeather()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -247,6 +255,21 @@ class WeatherViewController: UIViewController {
             }
         }
     }
+    
+    
+    func fetchWeather() {
+        let urlString = "https://api.openweathermap.org/data/2.5/onecall?lat=\(latitude)&lon=126.92620&exclude=&appid=767cd7ad6286d493b227a37032a0bcd6"
+        
+        AF.request(urlString)
+            .responseDecodable(of: WeatherResponse.self) { [weak self] response in
+                switch response.result {
+                case .success(let weatherResponse):
+                    print(weatherResponse)
+                case .failure(let error):
+                    print("ERROR: error on Alamofire request \(error)")
+                }
+            }
+    }
 }
 
 
@@ -288,7 +311,6 @@ extension WeatherViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifierForTableView, for: indexPath) as! WeatherForecaseByDayTableViewCell
-            
             cell.dayLabel.text = daysOnWeek[indexPath.row]
             return cell
         } else if indexPath.section == 1 {
