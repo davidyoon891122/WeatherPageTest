@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		AD2B3AC5276D716700E9A6FE /* WeatherResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD2B3AC4276D716700E9A6FE /* WeatherResponse.swift */; };
 		AD2B3AC9276D743300E9A6FE /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = AD2B3AC8276D743300E9A6FE /* Alamofire */; };
+		AD2B3AE0276F1BE100E9A6FE /* SeparatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD2B3ADF276F1BE100E9A6FE /* SeparatorView.swift */; };
 		ADFB510B274883FE00D854E3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADFB510A274883FE00D854E3 /* AppDelegate.swift */; };
 		ADFB510D274883FE00D854E3 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADFB510C274883FE00D854E3 /* SceneDelegate.swift */; };
 		ADFB51142748840000D854E3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ADFB51132748840000D854E3 /* Assets.xcassets */; };
@@ -21,6 +22,7 @@
 
 /* Begin PBXFileReference section */
 		AD2B3AC4276D716700E9A6FE /* WeatherResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherResponse.swift; sourceTree = "<group>"; };
+		AD2B3ADF276F1BE100E9A6FE /* SeparatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeparatorView.swift; sourceTree = "<group>"; };
 		ADFB5107274883FE00D854E3 /* WeatherPageTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeatherPageTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ADFB510A274883FE00D854E3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		ADFB510C274883FE00D854E3 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -106,6 +108,7 @@
 				ADFB5124274E0FEC00D854E3 /* WeatherStatusCollectionViewCell.swift */,
 				ADFB5126274E1FF900D854E3 /* WeatherForecaseByDayTableViewCell.swift */,
 				ADFB514A27545DD100D854E3 /* WeatherDetailInfoTableViewCell.swift */,
+				AD2B3ADF276F1BE100E9A6FE /* SeparatorView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -187,6 +190,7 @@
 			files = (
 				ADFB5121274885FF00D854E3 /* WeatherViewController.swift in Sources */,
 				ADFB510B274883FE00D854E3 /* AppDelegate.swift in Sources */,
+				AD2B3AE0276F1BE100E9A6FE /* SeparatorView.swift in Sources */,
 				ADFB510D274883FE00D854E3 /* SceneDelegate.swift in Sources */,
 				ADFB5127274E1FF900D854E3 /* WeatherForecaseByDayTableViewCell.swift in Sources */,
 				ADFB5125274E0FEC00D854E3 /* WeatherStatusCollectionViewCell.swift in Sources */,

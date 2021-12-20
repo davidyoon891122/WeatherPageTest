@@ -54,9 +54,11 @@ class WeatherViewController: UIViewController {
         let tableView = UITableView()
         tableView.backgroundColor = .systemBackground
         
-        tableView.estimatedRowHeight = 900
+//        tableView.estimatedRowHeight = 900
+        //tableView.rowHeight = UITableView.automaticDimension
         tableView.showsVerticalScrollIndicator = false
         tableView.translatesAutoresizingMaskIntoConstraints = false
+        
         return tableView
     }()
     
@@ -109,14 +111,6 @@ class WeatherViewController: UIViewController {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
     }()
-    
-    private let tableView: UITableView = {
-        let tableView = UITableView()
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.backgroundColor = .red
-        return tableView
-    }()
-    
     
     // MARK: - Init
     override func viewDidLoad() {
@@ -302,7 +296,7 @@ extension WeatherViewController: UITableViewDelegate, UITableViewDataSource {
         } else if section == 1 {
             return 1
         } else if section == 2 {
-            return 5
+            return 1
         } else {
             return 0
         }
@@ -320,8 +314,8 @@ extension WeatherViewController: UITableViewDelegate, UITableViewDataSource {
             return cell
         } else if indexPath.section == 2 {
             let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifierFOrTableViewDetailInfo, for: indexPath) as! WeatherDetailInfoTableViewCell
-            cell.firstTitleLabel.text = detailInfoFirstTitles[indexPath.row]
-            cell.secondTitleLabel.text = detailInfoSecondTitles[indexPath.row]
+//            cell.firstTitleLabel.text = detailInfoFirstTitles[indexPath.row]
+//            cell.secondTitleLabel.text = detailInfoSecondTitles[indexPath.row]
             
             return cell
         }else {
@@ -340,7 +334,8 @@ extension WeatherViewController: UITableViewDelegate, UITableViewDataSource {
         } else if indexPath.section == 1 {
             return 80
         } else if indexPath.section == 2 {
-            return 65
+            
+            return 500
         } else {
             return 50
             
