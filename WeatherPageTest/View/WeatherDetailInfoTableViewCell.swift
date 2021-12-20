@@ -98,6 +98,33 @@ class WeatherDetailInfoTableViewCell: UITableViewCell {
         return stackView
     }()
     
+    private lazy var fourthLabelStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.distribution = .fillEqually
+        return stackView
+    }()
+    
+    private lazy var fourthDataStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.distribution = .fillEqually
+        return stackView
+    }()
+    
+    private lazy var fifthLabelStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.distribution = .fillEqually
+        return stackView
+    }()
+    
+    private lazy var fifthDataStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.distribution = .fillEqually
+        return stackView
+    }()
     let sunriseTitleLabel: UILabel = {
         let label = UILabel()
         label.text = "일출"
@@ -189,6 +216,65 @@ class WeatherDetailInfoTableViewCell: UITableViewCell {
         return label
     }()
     
+    let rainTitleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "강우량"
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    let rainContentLabel: UILabel = {
+        let label = UILabel()
+        label.text = "0cm"
+        label.font = UIFont.boldSystemFont(ofSize: 25)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    let pressureTitleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "기압"
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    let pressureContentLabel: UILabel = {
+        let label = UILabel()
+        label.text = "1016hPa"
+        label.font = UIFont.boldSystemFont(ofSize: 25)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    let visibilityTitleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "가시거리"
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    let visibilityContentLabel: UILabel = {
+        let label = UILabel()
+        label.text = "1.9km"
+        label.font = UIFont.boldSystemFont(ofSize: 25)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    let uviTitleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "자외선 지수"
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    let uviContentLabel: UILabel = {
+        let label = UILabel()
+        label.text = "0"
+        label.font = UIFont.boldSystemFont(ofSize: 25)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
     
     private lazy var firstSeparator: SeparatorView = {
         let separator = SeparatorView(frame: .zero)
@@ -208,6 +294,13 @@ class WeatherDetailInfoTableViewCell: UITableViewCell {
         return separator
     }()
     
+    private lazy var fourthSeparator: SeparatorView = {
+        let separator = SeparatorView(frame: .zero)
+        separator.translatesAutoresizingMaskIntoConstraints = false
+        return separator
+    }()
+    
+    
     
     //let secondTitleLabel
     
@@ -226,6 +319,9 @@ class WeatherDetailInfoTableViewCell: UITableViewCell {
         self.addSubview(self.secondSeparator)
         self.addSubview(self.thirdStackView)
         self.addSubview(self.thirdSeparator)
+        self.addSubview(self.fourthStackView)
+        self.addSubview(self.fourthSeparator)
+        self.addSubview(self.fifthStackView)
         
         
         self.firstStackView.addArrangedSubview(self.firstLabelStackView)
@@ -256,12 +352,24 @@ class WeatherDetailInfoTableViewCell: UITableViewCell {
         self.thirdDataStackView.addArrangedSubview(self.windContentLabel)
         self.thirdDataStackView.addArrangedSubview(self.feelslikeContentLabel)
         
+        self.fourthStackView.addArrangedSubview(self.fourthLabelStackView)
+        self.fourthStackView.addArrangedSubview(self.fourthDataStackView)
         
-//        addSubview(firstTitleLabel)
-//        addSubview(firstContentLabel)
-//
-//        addSubview(secondTitleLabel)
-//        addSubview(secondContentLabel)
+        self.fourthLabelStackView.addArrangedSubview(self.rainTitleLabel)
+        self.fourthLabelStackView.addArrangedSubview(self.pressureTitleLabel)
+        
+        self.fourthDataStackView.addArrangedSubview(self.rainContentLabel)
+        self.fourthDataStackView.addArrangedSubview(self.pressureContentLabel)
+        
+        self.fifthStackView.addArrangedSubview(self.fifthLabelStackView)
+        self.fifthStackView.addArrangedSubview(self.fifthDataStackView)
+        
+        self.fifthLabelStackView.addArrangedSubview(self.visibilityTitleLabel)
+        self.fifthLabelStackView.addArrangedSubview(self.uviTitleLabel)
+        
+        self.fifthDataStackView.addArrangedSubview(self.visibilityContentLabel)
+        self.fifthDataStackView.addArrangedSubview(self.uviContentLabel)
+        
     }
     
     private func setLayoutConstraints() {
@@ -290,21 +398,20 @@ class WeatherDetailInfoTableViewCell: UITableViewCell {
         self.thirdSeparator.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
         self.thirdSeparator.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
         
-//        self.secondStackView.topAnchor.constraint(equalTo: self.separator.bottomAnchor).isActive = true
-//        self.secondStackView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 16).isActive = true
-//        self.secondStackView.rightAnchor.constraint(equalTo: self.rightAnchor, constant: 16).isActive = true
-//        firstTitleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 5).isActive = true
-//        firstTitleLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 20).isActive = true
-//
-//        firstContentLabel.topAnchor.constraint(equalTo: firstTitleLabel.bottomAnchor, constant: 5).isActive = true
-//        firstContentLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 20).isActive = true
-//
-//        secondTitleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 5).isActive = true
-//        secondTitleLabel.rightAnchor.constraint(equalTo: rightAnchor, constant: -150).isActive = true
-//
-//        secondContentLabel.topAnchor.constraint(equalTo: secondTitleLabel.bottomAnchor, constant: 5).isActive = true
-//        secondContentLabel.rightAnchor.constraint(equalTo: rightAnchor, constant: -70).isActive = true
+        self.fourthStackView.topAnchor.constraint(equalTo: self.thirdSeparator.bottomAnchor, constant: 5).isActive = true
+        self.fourthStackView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 16).isActive = true
+        self.fourthStackView.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -16).isActive = true
         
+        self.fourthSeparator.topAnchor.constraint(equalTo: self.fourthStackView.bottomAnchor, constant: 5).isActive = true
+        self.fourthSeparator.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
+        self.fourthSeparator.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
+        
+        self.fifthStackView.topAnchor.constraint(equalTo: self.fourthSeparator.bottomAnchor, constant: 5).isActive = true
+        self.fifthStackView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 16).isActive = true
+        self.fifthStackView.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -16).isActive = true
+        
+        
+
         
     }
     
