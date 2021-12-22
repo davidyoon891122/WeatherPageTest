@@ -10,6 +10,9 @@ import Alamofire
 
 class WeatherViewController: UIViewController {
     // MARK: - Properties
+    
+    var weatherResponse: WeatherResponse?
+    
     private let reuseIdentifierForCollectionView = "CELL"
     private let reuseIdentifierForTableView = "TableViewCell"
     private let reuseIdentifierForTableViewDescription = "TableViewDescriptionCell"
@@ -47,6 +50,8 @@ class WeatherViewController: UIViewController {
         collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.showsHorizontalScrollIndicator = false
+        collectionView.isPagingEnabled = true
+        
         return collectionView
     }()
     
@@ -258,11 +263,33 @@ class WeatherViewController: UIViewController {
             .responseDecodable(of: WeatherResponse.self) { [weak self] response in
                 switch response.result {
                 case .success(let weatherResponse):
-                    print(weatherResponse)
+                    guard let self = self else {
+                        return
+                    }
+                    self.weatherResponse = weatherResponse
+                    self.weatherDescription.text = weatherResponse.current.weather.first?.descriptionWeather
+                    self.degreeLabel.text = "\(self.fahrenheitToCelcius(fahrentheit: weatherResponse.current.temp))º"
+                    self.minLabel.text = "최저: \(self.fahrenheitToCelcius(fahrentheit: weatherResponse.daily.first?.temp.min ?? 0))º"
+                    self.maxLabel.text = "최고: \(self.fahrenheitToCelcius(fahrentheit: weatherResponse.daily.first?.temp.max ?? 0))º"
+                    self.weatherStatusByTimeCollectionView.reloadData()
+                    
                 case .failure(let error):
                     print("ERROR: error on Alamofire request \(error)")
                 }
             }
+    }
+    
+    
+    func fahrenheitToCelcius(fahrentheit: Double) -> Int {
+        return Int((fahrentheit - 273.15))
+    }
+    
+    func getDateTimeFromUTC(dateTime: Double) -> String {
+        let date = Date(timeIntervalSince1970: dateTime)
+        let dateFomatter = DateFormatter()
+        dateFomatter.dateFormat = "yyyy-MM-dd-hh-mm-ss"
+        return dateFomatter.string(from: date)
+        
     }
 }
 
@@ -270,12 +297,23 @@ class WeatherViewController: UIViewController {
 // MARK: - Extensions
 extension WeatherViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        guard let weatherResponse = weatherResponse else {
+            return 0
+        }
+        return weatherResponse.hourly.count
+//        return 10
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifierForCollectionView, for: indexPath)
-        return cell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifierForCollectionView, for: indexPath) as? WeatherStatusCollectionViewCell
+        guard let weatherResponse = self.weatherResponse else {
+            return UICollectionViewCell()
+        }
+        
+        let currentHour = weatherResponse.hourly[indexPath.row]
+        cell?.setup(hourly: currentHour)
+        
+        return cell ?? UICollectionViewCell()
     }
     
     

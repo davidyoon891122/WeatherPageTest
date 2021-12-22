@@ -9,14 +9,29 @@ import Foundation
 
 
 struct WeatherResponse: Decodable {
-    let current: WeatherInfo
-    let hourly: [WeatherInfo]
-    let daily: [DailyWeather]
-    //let lat: Double
+    let current: Current
+    let hourly: [Hourly]
+    let daily: [Daily]
 }
 
 
-struct WeatherInfo: Decodable {
+struct Current: Decodable {
+    let dt: Int
+    let temp: Double
+    let feelsLike: Double
+    let sunrise: Double
+    let sunset: Double
+    let uvi: Double
+    let visibility: Double
+    let weather: [Weather]
+    
+    enum CodingKeys: String, CodingKey {
+        case dt, temp, weather, sunrise, sunset, uvi, visibility
+        case feelsLike = "feels_like"
+    }
+}
+
+struct Hourly: Decodable {
     let dt: Int
     let temp: Double
     let feelsLike: Double
@@ -28,15 +43,19 @@ struct WeatherInfo: Decodable {
     }
 }
 
-
 struct Weather: Decodable {
     let main: String
-    let description: String
+    let descriptionWeather: String
     let icon: String
+    
+    enum CodingKeys: String, CodingKey {
+        case main, icon
+        case descriptionWeather = "description"
+    }
 }
 
 
-struct DailyWeather: Decodable {
+struct Daily: Decodable {
     let dt: Double
     let temp: DailyTemp
     let weather: [Weather]

@@ -32,14 +32,28 @@ class WeatherStatusCollectionViewCell: UICollectionViewCell {
         
     }()
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+
+    
+    
+    func setup(hourly: Hourly) {
         addSubviews()
         setLayoutConstrains()
+        self.timeLabel.text = self.getDateTimeFromUTC(dateTime: Double(hourly.dt))
+        self.degreeLabel.text = "\(self.fahrenheitToCelcius(fahrentheit: hourly.temp))º"
+        
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    func fahrenheitToCelcius(fahrentheit: Double) -> Int {
+        return Int((fahrentheit - 273.15))
+    }
+    
+    private func getDateTimeFromUTC(dateTime: Double) -> String {
+        let date = Date(timeIntervalSince1970: dateTime)
+        let dateFomatter = DateFormatter()
+        dateFomatter.dateFormat = "dd일 hh:mm"
+        print(dateFomatter.string(from: date))
+        return dateFomatter.string(from: date)
+        
     }
     
     private func addSubviews() {
