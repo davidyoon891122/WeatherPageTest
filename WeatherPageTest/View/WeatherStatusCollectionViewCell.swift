@@ -50,7 +50,7 @@ class WeatherStatusCollectionViewCell: UICollectionViewCell {
     private func getDateTimeFromUTC(dateTime: Double) -> String {
         let date = Date(timeIntervalSince1970: dateTime)
         let dateFomatter = DateFormatter()
-        dateFomatter.dateFormat = "dd일 hh:mm"
+        dateFomatter.dateFormat = "dd일 hh시"
         print(dateFomatter.string(from: date))
         return dateFomatter.string(from: date)
         
@@ -63,7 +63,12 @@ class WeatherStatusCollectionViewCell: UICollectionViewCell {
     }
     
     private func setLayoutConstrains() {
-        timeLabel.topAnchor.constraint(equalTo: topAnchor).isActive = true
+        contentView.layer.borderWidth = 0.5
+        contentView.layer.borderColor = UIColor.gray.cgColor
+        contentView.layer.cornerRadius = 8
+        contentView.layer.masksToBounds = false
+            
+        timeLabel.topAnchor.constraint(equalTo: topAnchor, constant: 5).isActive = true
         timeLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         timeLabel.heightAnchor.constraint(equalToConstant: 20).isActive = true
         

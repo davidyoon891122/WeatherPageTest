@@ -58,9 +58,6 @@ class WeatherViewController: UIViewController {
     private let weatherForecaseByDayTableView: UITableView = {
         let tableView = UITableView()
         tableView.backgroundColor = .systemBackground
-        
-//        tableView.estimatedRowHeight = 900
-        //tableView.rowHeight = UITableView.automaticDimension
         tableView.showsVerticalScrollIndicator = false
         tableView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -130,7 +127,7 @@ class WeatherViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        weatherForecaseByDayTableView.contentSize = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height )
+       // weatherForecaseByDayTableView.contentSize = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height )
     }
     
     
@@ -323,6 +320,14 @@ extension WeatherViewController: UICollectionViewDataSource {
 extension WeatherViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: collectionView.frame.width / 5, height: 90)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 10
     }
 }
 
