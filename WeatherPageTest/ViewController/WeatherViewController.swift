@@ -281,7 +281,7 @@ class WeatherViewController: UIViewController {
                     self.minLabel.text = "최저: \(self.fahrenheitToCelcius(fahrentheit: weatherResponse.daily.first?.temp.min ?? 0))º"
                     self.maxLabel.text = "최고: \(self.fahrenheitToCelcius(fahrentheit: weatherResponse.daily.first?.temp.max ?? 0))º"
                     self.weatherStatusByTimeCollectionView.reloadData()
-                    
+                    self.weatherForecaseByDayTableView.reloadData()
                 case .failure(let error):
                     print("ERROR: error on Alamofire request \(error)")
                 }
@@ -360,6 +360,7 @@ extension WeatherViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifierForTableView, for: indexPath) as! WeatherForecaseByDayTableViewCell
+            cell.setupData(dailyData: weatherResponse?.daily ?? [])
             return cell
         } else if indexPath.section == 1 {
             let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifierForTableViewDescription, for: indexPath)

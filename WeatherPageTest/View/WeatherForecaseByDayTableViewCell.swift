@@ -9,6 +9,7 @@ import UIKit
 
 class WeatherForecaseByDayTableViewCell: UITableViewCell {
     // MARK: - Properties
+    private var dailyList: [Daily]?
     
     private lazy var collectionView: UICollectionView = {
         let flowLayout = UICollectionViewFlowLayout()
@@ -36,10 +37,13 @@ class WeatherForecaseByDayTableViewCell: UITableViewCell {
         collectionView.translatesAutoresizingMaskIntoConstraints = false
     }
     
+    func setupData(dailyData: [Daily]) {
+        self.dailyList = dailyData
+        self.collectionView.reloadData()
+    }
+    
     private func addSubviews() {
         addSubview(collectionView)
-        
-        
     }
     
     private func setLayoutConstraints() {
@@ -67,16 +71,16 @@ extension WeatherForecaseByDayTableViewCell: UICollectionViewDelegateFlowLayout 
 
 extension WeatherForecaseByDayTableViewCell: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 8
+        return self.dailyList?.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "DayWeatherCollectionViewCell", for: indexPath) as? DayWeatherCollectionViewCell
-        cell?.setup()
+        guard let daily = dailyList?[indexPath.row] else {
+            return UICollectionViewCell()
+        }
+        print(daily)
+        cell?.setup(daily: daily)
         return cell ?? UICollectionViewCell()
     }
-    
-    
-    
-    
 }

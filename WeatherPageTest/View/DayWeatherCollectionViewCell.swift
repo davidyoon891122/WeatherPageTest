@@ -27,7 +27,8 @@ class DayWeatherCollectionViewCell: UICollectionViewCell {
     private lazy var minLabel: UILabel = {
         let label = UILabel()
         label.text = "-10º"
-        label.font = .systemFont(ofSize: 15)
+        label.font = .systemFont(ofSize: 13)
+        label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -35,18 +36,23 @@ class DayWeatherCollectionViewCell: UICollectionViewCell {
     private lazy var maxLabel: UILabel = {
         let label = UILabel()
         label.text = "0º"
-        label.font = .systemFont(ofSize: 15)
+        label.textAlignment = .center
+        label.font = .systemFont(ofSize: 13)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
     
-    func setup() {
+    func setup(daily: Daily) {
         addSubviews()
         setLayoutConstraint()
         backgroundColor = .systemBackground
+        self.dayLabel.text = getDateTimeFromUTC(dateTime: daily.dt)
+        self.minLabel.text = "\(fahrenheitToCelcius(fahrentheit: daily.temp.min))º"
+        self.maxLabel.text = "\(fahrenheitToCelcius(fahrentheit: daily.temp.max))º"
+        self.weatherImage.image = UIImage(systemName: <#T##String#>)
+        
     }
-    
     
 }
 
@@ -70,13 +76,24 @@ private extension DayWeatherCollectionViewCell {
         
         maxLabel.topAnchor.constraint(equalTo: topAnchor).isActive = true
         maxLabel.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
-        maxLabel.rightAnchor.constraint(equalTo: minLabel.leftAnchor, constant: -10).isActive = true
+        maxLabel.rightAnchor.constraint(equalTo: minLabel.leftAnchor, constant: -20).isActive = true
+        maxLabel.widthAnchor.constraint(equalToConstant: 30).isActive = true
         
         minLabel.topAnchor.constraint(equalTo: topAnchor).isActive = true
         minLabel.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
         minLabel.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
-        
-        
-        
+        minLabel.widthAnchor.constraint(equalToConstant: 30).isActive = true
+    }
+    
+    func getDateTimeFromUTC(dateTime: Double) -> String {
+        let date = Date(timeIntervalSince1970: dateTime)
+        let dateFomatter = DateFormatter()
+        dateFomatter.locale = Locale(identifier: "ko")
+        dateFomatter.dateFormat = "EEEE"
+        return dateFomatter.string(from: date)
+    }
+    
+    func fahrenheitToCelcius(fahrentheit: Double) -> Int {
+        return Int((fahrentheit - 273.15))
     }
 }

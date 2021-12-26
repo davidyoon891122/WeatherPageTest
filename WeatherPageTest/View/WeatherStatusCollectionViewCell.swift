@@ -53,7 +53,6 @@ class WeatherStatusCollectionViewCell: UICollectionViewCell {
         dateFomatter.locale = Locale(identifier: "ko")
         dateFomatter.dateFormat = "a hh시"
         return dateFomatter.string(from: date)
-        
     }
     
     private func addSubviews() {
