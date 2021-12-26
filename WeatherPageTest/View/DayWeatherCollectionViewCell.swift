@@ -43,6 +43,8 @@ class DayWeatherCollectionViewCell: UICollectionViewCell {
     }()
     
     
+    
+    
     func setup(daily: Daily) {
         addSubviews()
         setLayoutConstraint()
@@ -50,7 +52,7 @@ class DayWeatherCollectionViewCell: UICollectionViewCell {
         self.dayLabel.text = getDateTimeFromUTC(dateTime: daily.dt)
         self.minLabel.text = "\(fahrenheitToCelcius(fahrentheit: daily.temp.min))º"
         self.maxLabel.text = "\(fahrenheitToCelcius(fahrentheit: daily.temp.max))º"
-        self.weatherImage.image = UIImage(systemName: <#T##String#>)
+        self.weatherImage.image = iconStringToImage(icon: daily.weather.first?.icon ?? "")
         
     }
     
@@ -95,5 +97,18 @@ private extension DayWeatherCollectionViewCell {
     
     func fahrenheitToCelcius(fahrentheit: Double) -> Int {
         return Int((fahrentheit - 273.15))
+    }
+    
+    func iconStringToImage(icon: String) -> UIImage {
+        switch icon {
+        case "01d":
+            return UIImage(systemName: "sun.max.fill") ?? UIImage()
+        case "13d":
+            return UIImage(systemName: "cloud.snow.fill") ?? UIImage()
+        case "04d":
+            return UIImage(systemName: "cloud.fill") ?? UIImage()
+        default:
+            return UIImage(systemName: "sun.max.fill") ?? UIImage()
+        }
     }
 }
