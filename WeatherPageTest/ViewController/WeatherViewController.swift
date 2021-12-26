@@ -23,12 +23,6 @@ class WeatherViewController: UIViewController {
     private let latitude: Float = 37.52510
     private let longitude: Float = 126.92620
     
-    
-    private let daysOnWeek:[String] = ["월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일", "월요일"]
-    
-    private let detailInfoFirstTitles:[String] = ["일출", "비 올 확률","바람", "강수량","가시거리"]
-    private let detailInfoSecondTitles:[String] = ["일몰", "습도", "체감", "기압", "자외선 지수" ]
-    
     private var weatherBoardHeightConstraint: NSLayoutConstraint?
     private var locationLabelTopConstraint: NSLayoutConstraint?
     private var isFold = false
@@ -335,7 +329,7 @@ extension WeatherViewController: UICollectionViewDelegateFlowLayout {
 extension WeatherViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
-            return daysOnWeek.count
+            return 1
         } else if section == 1 {
             return 1
         } else if section == 2 {
@@ -348,7 +342,6 @@ extension WeatherViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifierForTableView, for: indexPath) as! WeatherForecaseByDayTableViewCell
-            cell.dayLabel.text = daysOnWeek[indexPath.row]
             return cell
         } else if indexPath.section == 1 {
             let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifierForTableViewDescription, for: indexPath)
@@ -357,8 +350,6 @@ extension WeatherViewController: UITableViewDelegate, UITableViewDataSource {
             return cell
         } else if indexPath.section == 2 {
             let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifierFOrTableViewDetailInfo, for: indexPath) as! WeatherDetailInfoTableViewCell
-//            cell.firstTitleLabel.text = detailInfoFirstTitles[indexPath.row]
-//            cell.secondTitleLabel.text = detailInfoSecondTitles[indexPath.row]
             
             return cell
         }else {
@@ -373,7 +364,7 @@ extension WeatherViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.section == 0 {
-            return 50
+            return 320
         } else if indexPath.section == 1 {
             return 80
         } else if indexPath.section == 2 {
@@ -384,7 +375,6 @@ extension WeatherViewController: UITableViewDelegate, UITableViewDataSource {
             
         }
     }
-
     
 }
 

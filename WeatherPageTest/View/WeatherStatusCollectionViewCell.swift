@@ -50,8 +50,8 @@ class WeatherStatusCollectionViewCell: UICollectionViewCell {
     private func getDateTimeFromUTC(dateTime: Double) -> String {
         let date = Date(timeIntervalSince1970: dateTime)
         let dateFomatter = DateFormatter()
-        dateFomatter.dateFormat = "dd일 hh시"
-        print(dateFomatter.string(from: date))
+        dateFomatter.locale = Locale(identifier: "ko")
+        dateFomatter.dateFormat = "a hh시"
         return dateFomatter.string(from: date)
         
     }

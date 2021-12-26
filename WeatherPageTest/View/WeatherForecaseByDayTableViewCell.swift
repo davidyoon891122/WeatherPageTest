@@ -10,33 +10,20 @@ import UIKit
 class WeatherForecaseByDayTableViewCell: UITableViewCell {
     // MARK: - Properties
     
-    let dayLabel: UILabel = {
-        let label = UILabel()
-        label.text = "일요일"
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    let weatherIconImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFit
-        imageView.image = UIImage(systemName: "sun.max")
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        return imageView
-    }()
-    
-    let minDegreeLabel: UILabel = {
-        let label = UILabel()
-        label.text = "11º"
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    let maxDegreeLabel: UILabel = {
-        let label = UILabel()
-        label.text = "-3º"
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
+    private lazy var collectionView: UICollectionView = {
+        let flowLayout = UICollectionViewFlowLayout()
+        flowLayout.scrollDirection = .vertical
+        flowLayout.minimumLineSpacing = 0
+        
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
+        
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.backgroundColor = .systemBackground
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.register(DayWeatherCollectionViewCell.self, forCellWithReuseIdentifier: "DayWeatherCollectionViewCell")
+        
+        return collectionView
     }()
     
     
@@ -46,28 +33,20 @@ class WeatherForecaseByDayTableViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         addSubviews()
         setLayoutConstraints()
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
     }
     
     private func addSubviews() {
-        addSubview(dayLabel)
-        addSubview(weatherIconImageView)
-        addSubview(minDegreeLabel)
-        addSubview(maxDegreeLabel)
+        addSubview(collectionView)
+        
+        
     }
     
     private func setLayoutConstraints() {
-        dayLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        dayLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 20).isActive = true
-        
-        
-        weatherIconImageView.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        weatherIconImageView.leftAnchor.constraint(equalTo: dayLabel.rightAnchor, constant: 100).isActive = true
-        
-        minDegreeLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        minDegreeLabel.leftAnchor.constraint(equalTo: weatherIconImageView.rightAnchor, constant: 100).isActive = true
-        
-        maxDegreeLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        maxDegreeLabel.leftAnchor.constraint(equalTo: minDegreeLabel.rightAnchor, constant: 20).isActive = true
+        collectionView.topAnchor.constraint(equalTo: topAnchor).isActive = true
+        collectionView.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
+        collectionView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+        collectionView.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
     }
     
     required init?(coder: NSCoder) {
@@ -75,5 +54,29 @@ class WeatherForecaseByDayTableViewCell: UITableViewCell {
     }
     
     // MARK: - Handlers
+    
+}
+
+
+
+extension WeatherForecaseByDayTableViewCell: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: collectionView.frame.width - 32, height: 40)
+    }
+}
+
+extension WeatherForecaseByDayTableViewCell: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 8
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "DayWeatherCollectionViewCell", for: indexPath) as? DayWeatherCollectionViewCell
+        cell?.setup()
+        return cell ?? UICollectionViewCell()
+    }
+    
+    
+    
     
 }

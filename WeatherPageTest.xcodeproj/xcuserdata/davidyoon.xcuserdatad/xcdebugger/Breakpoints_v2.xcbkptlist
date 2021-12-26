@@ -14,8 +14,8 @@
             filePath = "WeatherPageTest/ViewController/WeatherViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "267"
-            endingLineNumber = "267"
+            startingLineNumber = "261"
+            endingLineNumber = "261"
             landmarkName = "fetchWeather()"
             landmarkType = "7">
          </BreakpointContent>
