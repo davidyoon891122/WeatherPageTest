@@ -108,10 +108,16 @@ class WeatherViewController: UIViewController {
         return stackView
     }()
     
+    private let firstWideSeparatorView = WideSeparatorView()
+    private let secondWideSeparatorView = WideSeparatorView()
+    
     // MARK: - Init
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
+        firstWideSeparatorView.translatesAutoresizingMaskIntoConstraints = false
+        secondWideSeparatorView.translatesAutoresizingMaskIntoConstraints = false
+        
         addSubviews()
         setLayoutConstrains()
         setCollectionViewDelegate()
@@ -127,7 +133,9 @@ class WeatherViewController: UIViewController {
     
     private func addSubviews() {
         view.addSubview(weatherBoardVerticalStackView)
+        view.addSubview(firstWideSeparatorView)
         view.addSubview(weatherStatusByTimeCollectionView)
+        view.addSubview(secondWideSeparatorView)
         view.addSubview(weatherForecaseByDayTableView)
         
         weatherBoardVerticalStackView.addSubview(locationLabel)
@@ -146,15 +154,25 @@ class WeatherViewController: UIViewController {
         weatherBoardHeightConstraint = weatherBoardVerticalStackView.heightAnchor.constraint(equalToConstant: 300)
         weatherBoardHeightConstraint?.isActive = true
         
-        weatherStatusByTimeCollectionView.topAnchor.constraint(equalTo: weatherBoardVerticalStackView.bottomAnchor).isActive = true
-        weatherStatusByTimeCollectionView.leftAnchor.constraint(equalTo: super.view.leftAnchor).isActive = true
-        weatherStatusByTimeCollectionView.rightAnchor.constraint(equalTo: super.view.rightAnchor).isActive = true
+        
+        firstWideSeparatorView.topAnchor.constraint(equalTo: weatherBoardVerticalStackView.bottomAnchor).isActive = true
+        firstWideSeparatorView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        firstWideSeparatorView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        firstWideSeparatorView.heightAnchor.constraint(equalToConstant: 0.5).isActive = true
+        
+        weatherStatusByTimeCollectionView.topAnchor.constraint(equalTo: firstWideSeparatorView.bottomAnchor, constant: 5).isActive = true
+        weatherStatusByTimeCollectionView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        weatherStatusByTimeCollectionView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         weatherStatusByTimeCollectionView.heightAnchor.constraint(equalToConstant: 100).isActive = true
         
+        secondWideSeparatorView.topAnchor.constraint(equalTo: weatherStatusByTimeCollectionView.bottomAnchor, constant: 5).isActive = true
+        secondWideSeparatorView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        secondWideSeparatorView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        secondWideSeparatorView.heightAnchor.constraint(equalToConstant: 0.5).isActive = true
         
-        weatherForecaseByDayTableView.topAnchor.constraint(equalTo: weatherStatusByTimeCollectionView.bottomAnchor).isActive = true
-        weatherForecaseByDayTableView.leftAnchor.constraint(equalTo: super.view.leftAnchor).isActive = true
-        weatherForecaseByDayTableView.rightAnchor.constraint(equalTo: super.view.rightAnchor).isActive = true
+        weatherForecaseByDayTableView.topAnchor.constraint(equalTo: secondWideSeparatorView.bottomAnchor, constant: 5).isActive = true
+        weatherForecaseByDayTableView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        weatherForecaseByDayTableView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         weatherForecaseByDayTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         
         locationLabelTopConstraint = locationLabel.topAnchor.constraint(equalTo: weatherBoardVerticalStackView.safeAreaLayoutGuide.topAnchor, constant: 40)
