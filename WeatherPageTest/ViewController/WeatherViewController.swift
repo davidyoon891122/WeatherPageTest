@@ -127,7 +127,7 @@ class WeatherViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-       // weatherForecaseByDayTableView.contentSize = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height )
+        
     }
     
     
@@ -364,7 +364,13 @@ extension WeatherViewController: UITableViewDelegate, UITableViewDataSource {
             return cell
         } else if indexPath.section == 1 {
             let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifierForTableViewDescription, for: indexPath)
-            cell.textLabel?.text = "오늘: 현재 날씨 맑음, 최고 기온은 8º입니다. 오늘 밤 날씨 청명함, 최저 기온은 -4º"
+            guard let currentDescription = self.weatherResponse?.current.weather.first?.descriptionWeather,
+                  let currentMaxDegree = self.weatherResponse?.daily.first?.temp.max,
+                  let currentMinDegree = self.weatherResponse?.daily.first?.temp.min
+                  else {
+                return cell
+            }
+            cell.textLabel?.text = "오늘: 현재 날씨 \(currentDescription), 최고 기온은 \(self.fahrenheitToCelcius(fahrentheit: currentMaxDegree))입니다. 최저 기온은 \(self.fahrenheitToCelcius(fahrentheit: currentMinDegree))º"
             cell.textLabel?.numberOfLines = 0
             return cell
         } else if indexPath.section == 2 {

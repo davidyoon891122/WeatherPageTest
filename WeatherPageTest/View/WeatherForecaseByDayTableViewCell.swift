@@ -79,7 +79,6 @@ extension WeatherForecaseByDayTableViewCell: UICollectionViewDataSource {
         guard let daily = dailyList?[indexPath.row] else {
             return UICollectionViewCell()
         }
-        print(daily)
         cell?.setup(daily: daily)
         return cell ?? UICollectionViewCell()
     }
