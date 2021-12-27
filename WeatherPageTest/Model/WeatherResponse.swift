@@ -23,11 +23,16 @@ struct Current: Decodable {
     let sunset: Double
     let uvi: Double
     let visibility: Double
+    let humidity: Double
+    let windSpeed: Double
+    let pressure: Double
+    let clouds: Double
     let weather: [Weather]
     
     enum CodingKeys: String, CodingKey {
-        case dt, temp, weather, sunrise, sunset, uvi, visibility
+        case dt, temp, weather, sunrise, sunset, uvi, visibility, humidity, pressure, clouds
         case feelsLike = "feels_like"
+        case windSpeed = "wind_speed"
     }
 }
 
@@ -57,8 +62,21 @@ struct Weather: Decodable {
 
 struct Daily: Decodable {
     let dt: Double
+    let sunrise: Double
+    let sunset: Double
+    let feelLike: FeelLike
     let temp: DailyTemp
     let weather: [Weather]
+    let humidity: Double
+    let pressure: Double
+    let snow: Double?
+    let rain: Double?
+    
+    enum CodingKeys: String, CodingKey {
+        case dt, sunrise, sunset, temp, weather, humidity, pressure, snow, rain
+        case feelLike = "feels_like"
+    }
+    
 }
 
 
@@ -67,4 +85,13 @@ struct DailyTemp: Decodable {
     let day: Double
     let min: Double
     let max: Double
+    let night: Double
+}
+
+
+struct FeelLike: Decodable {
+    let day: Double
+    let night: Double
+    let eve: Double
+    let morn: Double
 }

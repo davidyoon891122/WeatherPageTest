@@ -16,7 +16,7 @@ class WeatherViewController: UIViewController {
     private let reuseIdentifierForCollectionView = "CELL"
     private let reuseIdentifierForTableView = "TableViewCell"
     private let reuseIdentifierForTableViewDescription = "TableViewDescriptionCell"
-    private let reuseIdentifierFOrTableViewDetailInfo = "TableViewDetailInfoCell"
+    private let reuseIdentifierForTableViewDetailInfo = "TableViewDetailInfoCell"
     
     private let weatherAPIKey = "767cd7ad6286d493b227a37032a0bcd6"
     //lat=37.52510&lon=126.92620
@@ -213,7 +213,7 @@ class WeatherViewController: UIViewController {
         weatherForecaseByDayTableView.dataSource = self
         weatherForecaseByDayTableView.register(WeatherForecaseByDayTableViewCell.self, forCellReuseIdentifier: reuseIdentifierForTableView)
         weatherForecaseByDayTableView.register(UITableViewCell.self, forCellReuseIdentifier: reuseIdentifierForTableViewDescription)
-        weatherForecaseByDayTableView.register(WeatherDetailInfoTableViewCell.self, forCellReuseIdentifier: reuseIdentifierFOrTableViewDetailInfo)
+        weatherForecaseByDayTableView.register(WeatherDetailInfoTableViewCell.self, forCellReuseIdentifier: reuseIdentifierForTableViewDetailInfo)
     }
     
     private func setPanGesture() {
@@ -266,7 +266,7 @@ class WeatherViewController: UIViewController {
     
     
     func fetchWeather() {
-        let urlString = "https://api.openweathermap.org/data/2.5/onecall?lat=\(latitude)&lon=126.92620&exclude=&appid=767cd7ad6286d493b227a37032a0bcd6"
+        let urlString = "https://api.openweathermap.org/data/2.5/onecall?lat=37.52510&lon=126.92620&exclude=&lang=kr&appid=767cd7ad6286d493b227a37032a0bcd6"
         
         AF.request(urlString)
             .responseDecodable(of: WeatherResponse.self) { [weak self] response in
@@ -282,6 +282,7 @@ class WeatherViewController: UIViewController {
                     self.maxLabel.text = "최고: \(self.fahrenheitToCelcius(fahrentheit: weatherResponse.daily.first?.temp.max ?? 0))º"
                     self.weatherStatusByTimeCollectionView.reloadData()
                     self.weatherForecaseByDayTableView.reloadData()
+                    
                 case .failure(let error):
                     print("ERROR: error on Alamofire request \(error)")
                 }
@@ -374,8 +375,8 @@ extension WeatherViewController: UITableViewDelegate, UITableViewDataSource {
             cell.textLabel?.numberOfLines = 0
             return cell
         } else if indexPath.section == 2 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifierFOrTableViewDetailInfo, for: indexPath) as! WeatherDetailInfoTableViewCell
-            
+            let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifierForTableViewDetailInfo, for: indexPath) as! WeatherDetailInfoTableViewCell
+            cell.setupData(response: self.weatherResponse)
             return cell
         }else {
             return UITableViewCell()

@@ -156,14 +156,14 @@ class WeatherDetailInfoTableViewCell: UITableViewCell {
     }()
     
     
-    let snowChanceTitleLabel: UILabel = {
+    let cloudChanceTitleLabel: UILabel = {
         let label = UILabel()
-        label.text = "눈 올 확률"
+        label.text = "구름"
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
-    let snowChanceContentLabel: UILabel = {
+    let cloudChanceContentLabel: UILabel = {
         let label = UILabel()
         label.text = "10%"
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -307,9 +307,32 @@ class WeatherDetailInfoTableViewCell: UITableViewCell {
     // MARK: - Init
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        //self.backgroundColor = .blue
         addSubviews()
         setLayoutConstraints()
+    }
+    
+    
+    func setupData(response: WeatherResponse?) {
+        guard let response = response else {
+            return
+        }
+        //print(response)
+        self.sunriseContentLabel.text = "\(self.getDateTimeFromUTC(dateTime: response.daily.first?.sunrise ?? 0, format: "a hh:MM"))"
+        self.sunsetContentLabel.text = "\(self.getDateTimeFromUTC(dateTime: response.daily.first?.sunset ?? 0, format: "a hh:MM"))"
+        self.cloudChanceContentLabel.text = "\(Int(response.current.clouds))%"
+        
+        self.humidityContentLabel.text = "\(Int(response.current.humidity))%"
+        self.windContentLabel.text = "\(response.current.windSpeed)m/s"
+        self.feelslikeContentLabel.text = "\(self.fahrenheitToCelcius(fahrentheit: response.current.feelsLike))º"
+        
+        if let rain = response.daily.first?.rain {
+            self.rainContentLabel.text = "\(rain)mm"
+        }else {
+            self.rainContentLabel.text = "0mm"
+        }
+        self.pressureContentLabel.text = "\(response.current.pressure)hPa"
+        self.visibilityContentLabel.text = "\(Int(response.current.visibility))"
+        self.uviContentLabel.text = "\(Int(response.current.uvi))"
     }
     
     private func addSubviews() {
@@ -337,10 +360,10 @@ class WeatherDetailInfoTableViewCell: UITableViewCell {
         self.secondStackView.addArrangedSubview(self.secondLabelStackView)
         self.secondStackView.addArrangedSubview(self.secondDataStackView)
 
-        self.secondLabelStackView.addArrangedSubview(self.snowChanceTitleLabel)
+        self.secondLabelStackView.addArrangedSubview(self.cloudChanceTitleLabel)
         self.secondLabelStackView.addArrangedSubview(self.humidityTitleLabel)
 
-        self.secondDataStackView.addArrangedSubview(self.snowChanceContentLabel)
+        self.secondDataStackView.addArrangedSubview(self.cloudChanceContentLabel)
         self.secondDataStackView.addArrangedSubview(self.humidityContentLabel)
         
         self.thirdStackView.addArrangedSubview(self.thirdLabelStackView)
@@ -421,6 +444,17 @@ class WeatherDetailInfoTableViewCell: UITableViewCell {
     
     // MARK: - Handlers
     
+    private func fahrenheitToCelcius(fahrentheit: Double) -> Int {
+        return Int((fahrentheit - 273.15))
+    }
+    
+    private func getDateTimeFromUTC(dateTime: Double, format: String) -> String {
+        let date = Date(timeIntervalSince1970: dateTime)
+        let dateFomatter = DateFormatter()
+        dateFomatter.locale = Locale(identifier: "ko")
+        dateFomatter.dateFormat = format
+        return dateFomatter.string(from: date)
+    }
 }
 
 // MARK: Extensions
