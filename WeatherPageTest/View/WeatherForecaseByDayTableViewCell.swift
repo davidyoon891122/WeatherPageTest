@@ -34,6 +34,7 @@ class WeatherForecaseByDayTableViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         addSubviews()
         setLayoutConstraints()
+        selectionStyle = .none
         collectionView.translatesAutoresizingMaskIntoConstraints = false
     }
     

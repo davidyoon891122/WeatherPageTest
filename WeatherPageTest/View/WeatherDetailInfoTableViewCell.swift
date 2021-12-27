@@ -309,6 +309,7 @@ class WeatherDetailInfoTableViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         addSubviews()
         setLayoutConstraints()
+        selectionStyle = .none
     }
     
     

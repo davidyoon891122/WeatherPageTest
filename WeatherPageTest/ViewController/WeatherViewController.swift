@@ -373,6 +373,7 @@ extension WeatherViewController: UITableViewDelegate, UITableViewDataSource {
             }
             cell.textLabel?.text = "오늘: 현재 날씨 \(currentDescription), 최고 기온은 \(self.fahrenheitToCelcius(fahrentheit: currentMaxDegree))입니다. 최저 기온은 \(self.fahrenheitToCelcius(fahrentheit: currentMinDegree))º"
             cell.textLabel?.numberOfLines = 0
+            cell.selectionStyle = .none
             return cell
         } else if indexPath.section == 2 {
             let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifierForTableViewDetailInfo, for: indexPath) as! WeatherDetailInfoTableViewCell
